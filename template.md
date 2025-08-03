@@ -12,6 +12,11 @@
 // Implementation example
 ```
 
+**Relevant Topics:**
+
+- Tag 1
+- Tag 2
+
 **Pros:**
 
 - ✅ Benefit 1
