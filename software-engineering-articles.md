@@ -24,8 +24,6 @@ Articles and resources encountered while learning system design.
 - I ask myself: What is my mental model when it comes to learning and how has it changed over the years? Has it ever updated before?
 - I realise that I'm trying to learn too many things concurrently and that is not helping. I should focus on them sequentially instead.
 
-## Template for New Entries
-
 ### [How Software Groups Rot: Legacy of the Expert Beginner](https://daedtech.com/how-software-groups-rot-legacy-of-the-expert-beginner/)
 
 **Status:** ✅ Read
