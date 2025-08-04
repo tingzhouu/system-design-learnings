@@ -113,3 +113,46 @@ What happens
 
 - ❌ We need to setup additional measures to persist the data, such as using CDC or streams in Redis
 - ❌ We need to handle node failures in Redis - what consistency and guarantees can be maintained in such events
+
+## How do you ensure durability for data stored on redis?
+
+**Context:** [Design Tinder](https://www.hellointerview.com/learn/system-design/problem-breakdowns/tinder)
+
+**Relevant Topics:**
+
+- Redis
+- Durability
+
+### Approach 1: Using Append Only File (AOF)
+
+AOF will store a file that contains all write commands made to redis. On startup, the operations will be replayed to reconstruct the original dataset.
+
+There are 3 fsync policies
+
+1. Once every second (default)
+2. On every query
+3. No fsync
+
+**Pros:**
+
+- ✅ High durability
+- ✅ Append-only log means that there is no corruption in a power outage.
+- ✅ Redis automatically rewrites the AOF when it gets too big to recreate the dataset with minimal commands
+
+**Cons:**
+
+- ❌ Performance issue depending on fsync policy chosen
+
+### Approach 2: Using Redis Database (RDB)
+
+Perform point-in-time snapshots of your dataset, at specified intervals. A fork is a system call to create an exact copy of the running process. If the redis has 2GB of data, fork needs to copy all 2GB. This fork operation is expensive and would not be ideal if called every second
+
+**Pros:**
+
+- ✅ Faster restarts with big dataset than AOF
+- ✅ Good for backups - eg storing a snapshot every day for the last 30 days
+
+**Cons:**
+
+- ❌ Durability is an issue, as generally snapshot intervals are 5 minutes, which means 5 minutes of data is lost. Compare this to AOF which loses at most 1 second of data.
+- ❌ Performance is an issue if dataset is too large due to forking.
